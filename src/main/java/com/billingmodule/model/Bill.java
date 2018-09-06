@@ -1,4 +1,5 @@
 package com.billingmodule.model;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class Bill {
 	@Column(name="billDate")
 	private Date billDate;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH},mappedBy="bill")
-	private List<BillDetails> billDetails;
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true,mappedBy="bill")
+	private List<BillDetails> billDetails=new ArrayList<BillDetails>();
 	@Column(name="billAmount")
 	private float billAmount;
 	
@@ -53,7 +54,22 @@ public class Bill {
 		return billDetails;
 	}
 	public void setBillDetails(List<BillDetails> billDetails) {
-		this.billDetails = billDetails;
+		
+		for(BillDetails billDetail:billDetails) {
+			System.out.println("Item Name:"+billDetail.getItemName());
+			System.out.println("Item Price:"+billDetail.getPrice());
+			System.out.println("Item Quantity:"+billDetail.getQuantity());
+					
+		}
+		this.billDetails=billDetails;
+		for(BillDetails billDetail:this.billDetails) {
+			System.out.println("Item Name:"+billDetail.getItemName());
+			System.out.println("Item Price:"+billDetail.getPrice());
+			System.out.println("Item Quantity:"+billDetail.getQuantity());
+					
+		}
+		
+		
 		
 	
 	}

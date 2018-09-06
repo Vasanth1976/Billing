@@ -19,8 +19,8 @@ public class BillDetails {
 	private String itemName;
 	private int quantity;
 	private float price;
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinColumn(foreignKey=@ForeignKey(name="billNumber"),insertable=false, updatable=false)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(foreignKey=@ForeignKey(name="billNumber"))
 	private Bill bill;
 	
 	
@@ -28,9 +28,7 @@ public class BillDetails {
 		
 		super();
 		System.out.println("In default constructor");
-		this.itemName = "Hi";
-		this.quantity = 50;
-		this.price = 650;
+		
 	}
 	
 	
