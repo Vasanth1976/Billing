@@ -24,10 +24,13 @@ public class Bill {
 	@Column(name="billDate")
 	private Date billDate;
 	
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH})
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REFRESH},mappedBy="bill")
 	private List<BillDetails> billDetails;
 	@Column(name="billAmount")
 	private float billAmount;
+	
+	
+	
 	public int getBillNumber() {
 		return billNumber;
 	}
