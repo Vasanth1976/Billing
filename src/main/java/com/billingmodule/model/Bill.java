@@ -9,8 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -19,15 +20,15 @@ import javax.persistence.OneToMany;
 public class Bill {
 	
 	@Id
-	@Column(name="billNumber")
+	@Column(name="bill_number")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int billNumber;
-	@Column(name="billDate")
+	@Column(name="bill_date")
 	private Date billDate;
 	
 	@OneToMany(cascade=CascadeType.ALL, orphanRemoval = true,mappedBy="bill")
-	private List<BillDetails> billDetails=new ArrayList<BillDetails>();
-	@Column(name="billAmount")
+	private List<BillDetails> billDetails;
+	@Column(name="bill_amount")
 	private float billAmount;
 	
 	
@@ -55,17 +56,11 @@ public class Bill {
 	}
 	public void setBillDetails(List<BillDetails> billDetails) {
 		
-		for(BillDetails billDetail:billDetails) {
-			System.out.println("Item Name:"+billDetail.getItemName());
-			System.out.println("Item Price:"+billDetail.getPrice());
-			System.out.println("Item Quantity:"+billDetail.getQuantity());
-					
-		}
+		
 		this.billDetails=billDetails;
+		//Setting the foreign key...
 		for(BillDetails billDetail:this.billDetails) {
-			System.out.println("Item Name:"+billDetail.getItemName());
-			System.out.println("Item Price:"+billDetail.getPrice());
-			System.out.println("Item Quantity:"+billDetail.getQuantity());
+			billDetail.setBill(this);
 					
 		}
 		

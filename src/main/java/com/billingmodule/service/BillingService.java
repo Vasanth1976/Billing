@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.billingmodule.dao.BillingRepository;
 import com.billingmodule.dao.ItemRepository;
 import com.billingmodule.model.Bill;
+import com.billingmodule.model.BillDetails;
 import com.billingmodule.model.Items;
 
 @Service
@@ -25,10 +26,14 @@ public class BillingService {
 	
 	public List<Items> getItems() {
 		List<Items> items=new ArrayList<>();
-		logger.debug("Items-Service");
 		itemRepository.findAll().forEach(items::add);
-		logger.debug("Items::"+items.toString());
 		return items;
+	}
+	
+	
+	
+	public void deleteBill(int id) {
+		billingRepository.deleteById(id);
 	}
 	
 	public void setBill(Bill bill) {
@@ -47,3 +52,4 @@ public class BillingService {
 	}
 
 }
+ 
